@@ -1,0 +1,9 @@
+fn_dir = "/share/people/starjjbang/mutation_signature/2_deconstructSigs_result/tmp/test.txt"
+write.table(tabix_input, fn_dir,sep='\t')
+bgzip(fn_dir, dest=sprintf("%s.bgz", sub("\\.gz$", "", file)), overwrite = FALSE)
+
+from = "/share/people/starjjbang/mutation_signature/2_deconstructSigs_result/tmp/test.txt"
+to <- tempfile()
+zipped <- bgzip(from, to)
+idx <- indexTabix(zipped, seq = 1, start=2, end = 3)
+tab <- TabixFile(zipped, idx) 
